@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.search.SearchFragment">
+    tools:context=".ui.search.SearchFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_searchResult"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -70,7 +70,34 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             app:layout_constraintWidth_percent="0.9" />
 
+        <ProgressBar
+            android:id="@+id/pb_search"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/rv_searchResult"
+            app:layout_constraintStart_toStartOf="@+id/rv_searchResult"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_top"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="24dp"
+            android:elevation="0dp"
+            android:src="@drawable/fab_selector"
+            app:fabCustomSize="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_searchResult"
+            app:layout_constraintEnd_toEndOf="@+id/rv_searchResult"
+            app:maxImageSize="40dp"
+            app:tint="@null"
+            tools:ignore="ContentDescription" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

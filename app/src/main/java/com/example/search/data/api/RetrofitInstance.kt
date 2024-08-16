@@ -1,4 +1,4 @@
-package com.example.search.api
+package com.example.search.data.api
 
 import com.example.search.util.Constants.BASE_URL
 import retrofit2.Retrofit

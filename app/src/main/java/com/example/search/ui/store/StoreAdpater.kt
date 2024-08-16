@@ -1,32 +1,42 @@
-package com.example.search.fragment.store
+package com.example.search.ui.store
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.search.api.Document
 import com.example.search.databinding.ItemBinding
+import com.example.search.model.Item
+import com.example.search.util.Constants.SEARCH_TYPE_VIDEO
 import com.example.search.util.Utils.getFormatDate
 
 class StoreAdapter(private val mContext: Context) :
     RecyclerView.Adapter<StoreAdapter.ViewHolder>() {
 
-    var items = mutableListOf<Document>()
+    // 북마크된 아이템
+    var items = ArrayList<Item>()
 
+    // 항목 클릭 리스너 인터페이스
+    interface ItemClick {
+        fun onClick(item: Item, position: Int)
+    }
+
+    var itemClick: ItemClick? = null
+
+    // 뷰홀더 선언
     inner class ViewHolder(private val binding: ItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Document) {
-            Glide.with(mContext).load(item.thumbnailUrl).into(binding.ivThumbnail)
-            binding.tvSitename.text = item.displaySitename
-            binding.tvDatetime.text = getFormatDate(item.datetime)
 
-            binding.ivThumbnail.setOnClickListener {
+        fun bind(item: Item) {
+            val type = if (item.type == SEARCH_TYPE_VIDEO) "[동영상] " else "[이미지] "
+            Glide.with(mContext).load(item.url).into(binding.ivThumbnail)
+            binding.tvTitle.text = type + item.title
+            binding.tvDatetime.text = getFormatDate(item.dateTime)
+
+            binding.itemView.setOnClickListener {
                 val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    items.removeAt(position)
-                    notifyItemRemoved(position)
-                }
+                itemClick?.onClick(items[position], position)
             }
         }
     }

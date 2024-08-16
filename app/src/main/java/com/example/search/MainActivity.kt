@@ -5,54 +5,33 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import com.example.search.api.Document
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.search.databinding.ActivityMainBinding
-import com.example.search.fragment.search.SearchFragment
-import com.example.search.fragment.store.StoreFragment
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    var selectedItems: ArrayList<Document> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 바인딩 설정
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 위젯 배치 설정
         enableEdgeToEdge()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
-        binding.apply {
-            btn1.setOnClickListener { setFragment(SearchFragment()) }
-            btn2.setOnClickListener { setFragment(StoreFragment()) }
-        }
+        // 메인 프래그먼트의 NavController를 가져와 Navigation Component에서 프래그먼트 간의 탐색을 관리함
+        val navController = findNavController(R.id.nav_host_fragment)
 
-        setFragment(SearchFragment())
-    }
-
-    private fun setFragment(frag : Fragment) {
-        supportFragmentManager.commit {
-            replace(R.id.frameLayout, frag)
-            setReorderingAllowed(true)
-            addToBackStack("")
-        }
-    }
-
-    fun addLikedItem(item: Document) {
-        if(!selectedItems.contains(item)) {
-            selectedItems.add(item)
-        }
-    }
-
-    fun removeLikedItem(item: Document) {
-        selectedItems.remove(item)
+        // BottomNavigationView를 NavController와 연결함
+        NavigationUI.setupWithNavController(binding.navBottom, navController)
     }
 }

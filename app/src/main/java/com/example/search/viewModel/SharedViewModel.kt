@@ -1,5 +1,6 @@
 package com.example.search.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -7,7 +8,7 @@ class SharedViewModel : ViewModel() {
 
     // 삭제된 아이템 url 리스트 선언
     private val _deletedItemUrls = MutableLiveData<List<String>>()
-    val deletedItemUrls get() = _deletedItemUrls
+    val deletedItemUrls: LiveData<List<String>> get() = _deletedItemUrls
 
     // 삭제된 아이템 url 리스트 갱신
     fun addDeletedItemUrls(url: String) {

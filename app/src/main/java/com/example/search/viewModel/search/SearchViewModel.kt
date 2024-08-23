@@ -1,6 +1,7 @@
 package com.example.search.viewModel.search
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.search.data.api.RetrofitInterface
@@ -21,11 +22,11 @@ class SearchViewModel(private val apiService: RetrofitInterface) : ViewModel() {
 
     // 검색 결과에 대한 LiveData 선언
     private val _searchResults = MutableLiveData<List<Item>>()
-    val searchResults get() = _searchResults
+    val searchResults: LiveData<List<Item>> get() = _searchResults
 
     // 로딩 상태에 대한 LiveData 선언
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading get() = _isLoading
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     // 페이지, 결과 아이템 등의 변수 선언
     var pageCnt = 1

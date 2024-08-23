@@ -1,6 +1,7 @@
 package com.example.search.viewModel.store
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.search.model.Item
@@ -10,7 +11,7 @@ class StoreViewModel : ViewModel() {
 
     // 저장된 아이템들에 대한 LiveData 선언
     private val _storedItems = MutableLiveData<ArrayList<Item>>()
-    val storedItems get() = _storedItems
+    val storedItems: LiveData<ArrayList<Item>> get() = _storedItems
 
     // 저장된 아이템들을 가져오는 함수
     fun getStoredItems(context: Context) {
